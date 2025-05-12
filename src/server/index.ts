@@ -8,6 +8,7 @@ import Docker from 'dockerode';
 
 const app = express();
 const PORT = 3001;
+// Update FILES_DIR to point to the "files" subdirectory
 const FILES_DIR = path.resolve(process.cwd(), 'files');
 
 // Create Docker instance
@@ -51,12 +52,27 @@ const getClientFolders = async (): Promise<string[]> => {
 };
 
 const parseDockerComposeFile = async (clientName: string) => {
+  // This should now look for docker-compose.yml files correctly
   const composeFilePath = path.join(FILES_DIR, clientName, 'docker-compose.yml');
   
   try {
     // Check if file exists
     if (!fs.existsSync(composeFilePath)) {
-      console.log(`No docker-compose.yml found for ${clientName}`);
+      // Also check for dockercompose.yml (without the dash) as mentioned in your structure
+      const alternateFilePath = path.join(FILES_DIR, clientName, 'dockercompose.yml');
+      if (fs.existsSync(alternateFilePath)) {
+        const fileContent = await fs.promises.readFile(alternateFilePath, 'utf8');
+        const composeData = yaml.load(fileContent) as any;
+        
+        if (!composeData || !composeData.services) {
+          console.log(`Invalid dockercompose.yml for ${clientName}`);
+          return null;
+        }
+        
+        return composeData;
+      }
+      
+      console.log(`No docker-compose.yml or dockercompose.yml found for ${clientName}`);
       return null;
     }
 
@@ -157,6 +173,8 @@ const getServicesForClient = async (clientName: string): Promise<DockerService[]
 app.get('/api/clients', async (req, res) => {
   try {
     const clientFolders = await getClientFolders();
+    console.log('Found client folders:', clientFolders);
+    
     const clients: ClientFolder[] = [];
     
     for (const clientName of clientFolders) {
