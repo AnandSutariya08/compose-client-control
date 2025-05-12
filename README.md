@@ -1,73 +1,80 @@
-# Welcome to your Lovable project
 
-## Project info
+# Docker Compose Manager
 
-**URL**: https://lovable.dev/projects/29b17fb5-cab9-4e54-b0cb-0f1f3fa623fb
+A full-stack web application to manage Docker containers defined in multiple docker-compose.yml files across different client folders.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- 📁 Dynamically loads client folders and their docker-compose.yml files
+- 🔍 Displays services, images, ports, and container statuses
+- 🚀 Start, stop, and fetch Docker containers with one click
+- 🔄 Real-time status updates
+- 🧩 Clean, intuitive UI with tab-based navigation
 
-**Use Lovable**
+## Project Structure
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/29b17fb5-cab9-4e54-b0cb-0f1f3fa623fb) and start prompting.
+```
+.
+├── files/           # Client folders with docker-compose.yml files
+│   ├── client1/
+│   │   └── docker-compose.yml
+│   ├── client2/
+│   │   └── docker-compose.yml
+│   └── ...
+├── src/
+│   ├── components/  # React components
+│   ├── server/      # Express.js backend
+│   ├── services/    # API services
+│   └── types/       # TypeScript type definitions
+└── ...
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+1. **Clone the repository**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+git clone <repository-url>
+cd docker-compose-manager
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. **Install dependencies**
 
-Follow these steps:
+```bash
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. **Create the files directory structure**
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Create a `files` directory in the root of the project and add client subdirectories with docker-compose.yml files:
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+mkdir -p files/client1
+mkdir -p files/client2
+# Add docker-compose.yml files to each client directory
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. **Start the backend server**
+
+```bash
+node src/server/startServer.js
+```
+
+5. **Start the frontend development server**
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+6. **Access the application**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Open your browser and navigate to [http://localhost:8080](http://localhost:8080)
 
-**Use GitHub Codespaces**
+## Requirements
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Node.js 18+
+- Docker Engine running on the host machine
 
-## What technologies are used for this project?
+## License
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/29b17fb5-cab9-4e54-b0cb-0f1f3fa623fb) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+MIT
